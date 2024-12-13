@@ -27,10 +27,7 @@
 						<tr>
 							<th>User ID</th>
 							<th>Full Name</th>
-							<th>Phone</th>
-							<th>Date Of Birth</th>
 							<th>User Name</th>
-							<th>Password</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
@@ -38,10 +35,7 @@
 						<tr th:each="user : ${listUsers}">
 							<td th:text="${user.id}">User ID</td>
 							<td th:text="${user.fullname}">Full Name</td>
-							<td th:text="${user.phoneNumber}">Phone</td>
-							<td th:text="${user.dateOfBirth}">Date Of Birth</td>
 							<td th:text="${user.username}">User Name</td>
-							<td th:text="${user.password}">Password</td>
 							<td><a th:href="@{/edituser/{id}(id=${user.id})}">Update</a> 
 							<a th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
 						</tr>
