@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin hoá đơn</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/detailsinvoice.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div>
+        <div class="main-screen">
+            <div class = "left-bar">
+                <div class = "name-of-func"><b>THANH TOÁN</b></div>
+                <div class = "cashier-infor">Thông tin thu ngân</div>
+                <div class = "details-inf">
+                    <div class="cashier-inf">Tên: </div>
+                    <div class="shift-info"></div>
+                </div>
+                <div class = "btn-func">
+                    <div class = "add-btn">Danh sách hoá đơn</div>
+                    <div onclick="window.location.href='/homepage/homepage-cashier'">Thoát</div>
+                </div>
+                <div class="choosetable-to-delete">
+                    <div class = "search-table-id">
+                        <div><b>Nhập ID</b></div>
+                        <input type="text" id = "table-id">
+                    </div>
+                </div>
+            </div>
+            <div class = "right-bar">
+                <div class = "delete-table">THÔNG TIN HOÁ ĐƠN</div>
+                <div class = "table-screen">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dish name</th>
+                                <th>Quantity</th>
+                                <th>Total price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-details">
+	                        <tr th:each="detail : ${invoiceDetails}">
+							    <td th:text="${detail.dishName}"></td>
+							    <td th:text="${detail.quantity}"></td>
+							    <td th:text="${detail.totalPrice}"></td>
+							</tr>
+                        </tbody>
+                    </table>
+                    <div class="sum-and-btn">
+                        <div class="sum">Tổng tiền: 114000.00đ</div>
+                        <button type = "button" onclick="window.location.href='http://localhost:8080/homepage-cashier/pay'">Xác nhận</button>
+                    </div>
+                </div>
+            </div>
+            <div class = "clear-fix"></div>
+        </div>
+    </div>
+    
+
+    <script type="text/javascript">
+	    document.addEventListener('DOMContentLoaded', function () {
+	        const fullname = localStorage.getItem("fullname");
+	        if (fullname) {
+	            document.querySelector('.cashier-inf').textContent = `Tên: ${fullname}`;
+	        }
+	
+	        const currentTime = new Date();
+	        const currentHour = currentTime.getHours();
+	        let shift = '';
+	        if (currentHour >= 6 && currentHour < 12) {
+	            shift = "Sáng";
+	        } else if (currentHour >= 12 && currentHour < 18) {
+	            shift = "Chiều";
+	        } else {
+	            shift = "Tối";
+	        }
+	        document.querySelector('.shift-info').textContent = `Ca làm việc: ${shift}`;
+	    });
+	    document.addEventListener('DOMContentLoaded', function () {
+	        // Lấy invoiceId từ URL đường dẫn
+	        const pathname = window.location.pathname;
+	        const invoiceId = pathname.split('/').pop(); // Lấy phần cuối của URL, ví dụ: 2
+	
+	        if (invoiceId) {
+	            fetch(`/homepage-cashier/detail-invoice/${invoiceId}`)
+	                .then(response => response.json())
+	                .then(data => {
+	                    console.log('Dữ liệu trả về:', data);
+	                    const tbody = document.querySelector('tbody');
+	                    tbody.innerHTML = '';  // Xóa dữ liệu cũ
+	
+	                    let totalSum = 0;  // Biến để tính tổng tiền
+	                    if (Array.isArray(data)) {
+	                        data.forEach(detail => {
+	                            const row = document.createElement('tr');
+	                            row.innerHTML = `
+	                                <td>${detail.dishName}</td>
+	                                <td>${detail.quantity}</td>
+	                                <td>${detail.totalPrice.toLocaleString()}đ</td>
+	                            `;
+	                            tbody.appendChild(row);
+	                            totalSum += detail.totalPrice;
+	                        });
+	
+	                        // Cập nhật tổng tiền vào phần có class "sum"
+	                        const sumElement = document.querySelector('.sum');
+	                        sumElement.innerHTML = `Tổng tiền: ${totalSum.toLocaleString()}đ`;
+	                    } else {
+	                        console.error("Dữ liệu trả về không phải là mảng:", data);
+	                    }
+	                })
+	                .catch(error => {
+	                    console.error('Error fetching invoice details:', error);
+	                });
+	        }
+	    });
+    </script>
+</body>
+</html>

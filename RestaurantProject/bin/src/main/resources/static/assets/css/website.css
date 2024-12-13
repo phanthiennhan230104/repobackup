@@ -1,0 +1,500 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    width: 100%;
+    height: 100vh;
+}	
+
+section nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    background: rgb(196, 215, 245);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+section nav .logo img {
+    width: 100px;
+    cursor: pointer;
+    margin: 7px 0;
+}
+
+section nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+section nav ul li a {
+    color: #000;
+    font-weight: 500;
+    font-size: 17px;
+    transition: 0.1s;
+}
+
+section nav ul li a:hover {
+    color: rgb(30,144,255);
+}
+
+section nav ul li a::after {
+    content: '';
+    width: 0;
+    height: 2px;
+    background: rgb(30,144,255);
+    display: block;
+    transition: 0.2s linear;
+}
+
+section nav ul li a:hover::after {
+    width: 100%;
+}
+
+section nav .icon i {
+    font-size: 18px;
+    color: #000;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+section nav .icon i:hover {
+    color: rgb(30,144,255);
+}
+
+
+section .main {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+    top: 130px;
+}
+
+section .main .main_text h1 {
+    font-size: 60px;
+    position: relative;
+    top: -90px;
+    left: 20px;
+}
+
+section .main .main_text h1 span {
+    margin-left: 15px;
+    color: rgb(30,144,255);
+    font-family: 'MV Boli';
+    font-size: 70px;
+}
+
+section .main .main_image img {
+    width: 700px;
+    position: relative;
+    left: 70px;
+}
+
+section p {
+    width: 650px;
+    text-align: justify;
+    position: relative;
+    left: 123px;
+    bottom: 120px;
+    line-height: 22px;
+}
+
+/* About Section */
+
+.about {
+    width: 100%;
+    height: 100vh;
+    padding: 70px 0;
+}
+
+.about .about_main {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.about .about_main .image img {
+    width: 800px;
+    position: relative;
+    top: 60px;
+}
+
+.about .about_main .about_text h1 {
+    font-size: 55px;
+    position: relative;
+    bottom: 50px;
+}
+
+.about .about_main .about_text h1 span {
+    color: rgb(30,144,255);
+    font-family: 'MV Boli';
+}
+
+.about .about_main .about_text h3 {
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+
+.about .about_main .about_text p {
+    width: 650px;
+    text-align: justify;
+    line-height: 22px;
+    margin-right: 30px;
+}
+
+/*Menu*/
+
+.menu{
+    width: 100%;
+    padding: 70px 0;
+}
+
+.menu h1{
+    font-size: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.menu h1 span{
+    color: rgb(30,144,255);
+    margin-left: 15px;
+    font-family: mv boli;
+}
+
+.menu h1 span::after{
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: rgb(30,144,255);
+    display: block;
+    position: relative;
+    bottom: 15px;
+}
+
+.menu .menu_box{
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+.menu .menu_box .menu_card{
+    width: 325px;
+    height: 380px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.menu .menu_box .menu_card .menu_image{
+    width: 300px;
+    height: 245px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.menu .menu_box .menu_card .menu_image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: 0.3s;
+}
+
+.menu .menu_box .menu_card .menu_image:hover img{
+    transform: scale(1.1);
+}
+
+.menu .menu_box .menu_card .small_card{
+    width: 45px;
+    height: 45px;
+    float: right;
+    position: relative;
+    top: -240px;
+    right: -8px;
+    opacity: 0;
+    border-radius: 7px;
+    transition: 0.3s;
+}
+
+.menu .menu_box .menu_card:hover .small_card{
+    position: relative;
+    top: -240px;
+    right: 20px;
+    opacity: 1;
+}
+
+.menu .menu_box .menu_card .small_card i{
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 50px;
+    color: #000;
+    cursor: pointer;
+    text-shadow: 0 0 6px #000;
+    transition: 0.2s;
+}
+
+.menu .menu_box .menu_card .small_card i:hover{
+    color: rgb(30,144,255);
+}
+
+.menu .menu_box .menu_card .menu_info h2{
+    width: 60%;
+    text-align: center;
+    margin: 10px auto 10px auto;
+    font-size: 25px;
+    color: rgb(30,144,255);
+}
+
+.menu .menu_box .menu_card .menu_info p{
+    text-align: center;
+    margin-top: 8px;
+    line-height: 21px;
+}
+
+.menu .menu_box .menu_card .menu_info h3{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.menu .menu_box .menu_card .menu_info .menu_icon{
+    color: rgb(30,144,255);
+    text-align: center;
+    margin: 10px 0 10px 0;
+}
+
+.menu .menu_box .menu_card .menu_info .menu_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    background: #000;
+    padding: 8px 10px;
+    margin: 0 80px;
+    transition: 0.3s;
+}
+
+/* Order Section */
+
+.order {
+    width: 100%;
+    height: 100vh;
+    padding: 70px 0;
+    background-image: url('image/bg2.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.order h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 55px;
+}
+
+.order h1 span {
+    color: rgb(30,144,255);
+    font-family: 'MV Boli';
+}
+
+.order .order_main {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.order .order_main .order_image img {
+    width: 600px;
+}
+
+.order .order_main form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.order .order_main form .input input,
+.order .order_main form .input select {
+    width: 300px;
+    height: 35px;
+    padding: 0 10px;
+    border: 2px solid #cccccc;
+    background: #eeeeee;
+    border-radius: 3px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.order .order_main form .input input:focus,
+.order .order_main form .input select:focus {
+    border-color: rgb(30,144,255);
+}
+
+.order .order_main form .order_btn {
+    padding: 10px 0;
+    background: rgb(30,144,255);
+    color: white;
+    width: 40%;
+    text-align: center;
+    border: none;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.order .order_main form .order_btn:hover {
+    background: rgb(25,130,230);
+    transform: scale(1.05);
+}
+
+.order .order_main form .order_btn:active {
+    background: rgb(20,110,200);
+    transform: scale(0.95);
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    width: 100%;
+    padding: 30px 0 0;
+    background: #eeeeee;
+}
+
+footer .footer_main {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+footer .footer_main .footer_tag h2 {
+    color: #000;
+    margin-bottom: 25px;
+    font-size: 30px;
+}
+
+footer .footer_main .footer_tag i:hover {
+    color: rgb(30,144,255);
+}
+
+/* Custom Scrollbar */
+
+::-webkit-scrollbar {
+    width: 13px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 15px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(30,144,255);
+    border-radius: 15px;
+}
+.signin-btn, .signup-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 30px;
+    background: rgb(30,144,255);
+    color: white;
+    transition: 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.login-btn:hover, .signup-btn:hover {
+    background: rgb(25,130,230);
+    transform: scale(1.05);
+}
+
+.login-btn:active, .signup-btn:active {
+    background: rgb(20,110,200);
+    transform: scale(0.95);
+}
+
+.login-btn:focus, .signup-btn:focus {
+    outline: none;
+    border: 2px solid rgb(30,144,255);
+}
+
+ /* Modal container */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000; 
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    width: auto;
+    max-width: 500px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 10px; 
+    overflow: hidden;
+    animation: fadeIn 0.3s ease-out; 
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #fff;
+    border-radius: 8px; 
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Close button */
+.close {
+    color: #333;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #ff4d4d;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%; 
+        padding: 20px;
+    }
+}

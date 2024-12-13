@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/signup.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="container">
+        <div class="main-form">
+            <form action="@{/login/signup}" method="POST">
+                <div class = "title">
+                    <h2>SELF RESTAURANT</h2>
+                    <h3>SIGN UP</h3>
+                </div>
+                <div class = "information">
+                    <div class="fullname">
+                        <label for="">Fullname</label><br>
+                        <input type="text" name = "fullname" id = "fullname">
+                    </div>
+                    <div class="phone-number">
+                        <label for="">Phone Number</label><br>
+                        <input type="text" name = "phonenumber" id = "phonenumber">
+                    </div>
+                    <div class="dateofbirth">
+                        <label for="">Date Of Birth</label><br>
+                        <input type="date" name = "dateofbirth" id = "dateofbirth">
+                    </div>
+                    <div class="gender">
+                        <label for="">Gender</label><br>
+                        <div class = "details-gender">
+                            <div>
+                                <label for="" class = "Nam" style="font-weight: lighter;">Male</label>
+                                <input type="radio" value="Nam" name = "gender" id = "gender-male">
+                            </div>
+
+                            <div>
+                                <label for="" class = "Nu" style="font-weight: lighter;">Female</label>
+                                <input type="radio" value="Nu" name = "gender" id = "gender-female">
+                            </div>
+                            <!-- <div>
+                                <label for="" class = "Khac" style="font-weight: lighter;">Other</label>
+                                <input type="radio" value="Khac" name = "gender">
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class = "account">
+                        <div class = "username">
+                            <label for="">Username</label><br>
+                            <input type="text" name = "username" id = "username">
+                        </div>
+                        <div class = "password">
+                            <label for="">Password</label><br>
+                            <input type="password" name = "password" id = "password">
+                        </div>
+                        <div class = "confirm-password">
+                            <label for="">Password</label><br>
+                            <input type="password" name = "confirm-password" id = "confirm-password">
+                        </div>
+                    </div>
+                    <input type="hidden" id="role_id" name="role_id" value="0">
+                    <div class = "button">
+                        <button type="button" onclick="window.location.href='/login/signin'">Cancel</button>
+                        <button id = "btn-signup" type="button">Sign Up</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+	    $(document).ready(function () {
+	        $("#btn-signup").click(function () {
+	            // Lấy dữ liệu từ các trường input
+	            var fullname = $("#fullname").val().trim();
+	            var phonenumber = $("#phonenumber").val().trim();
+	            var dateofbirth = $("#dateofbirth").val().trim();
+	            var gender = $("input[name='gender']:checked").val();
+	            var username = $("#username").val().trim();
+	            var password = $("#password").val().trim();
+	            var confirmPassword = $("#confirm-password").val().trim();
+	
+	            // Kiểm tra dữ liệu nhập vào
+	            if (!fullname || !phonenumber || !dateofbirth || !gender || !username || !password || !confirmPassword) {
+	                alert("Please fill in all fields!");
+	                return;
+	            }
+	
+	            // Kiểm tra định dạng số điện thoại
+	            if (!/^\d{10,11}$/.test(phonenumber)) {
+	                alert("Phone number must be 10 to 11 digits and contain no letters.");
+	                return;
+	            }
+	
+	            // Kiểm tra định dạng username
+	            if (!/^[a-zA-Z0-9]{6,}$/.test(username)) {
+	                alert("Username must be at least 6 characters long and contain no special characters.");
+	                return;
+	            }
+	
+	            // Kiểm tra mật khẩu khớp nhau
+	            if (password !== confirmPassword) {
+	                alert("Passwords do not match!");
+	                return;
+	            }
+	
+	            // Gửi dữ liệu đến API
+	            $.ajax({
+	                method: "POST",
+	                url: "http://localhost:8080/login/signup",
+	                contentType: "application/json",
+	                data: JSON.stringify({
+	                    fullname: fullname,
+	                    phonenumber: phonenumber,
+	                    dateofbirth: dateofbirth,
+	                    gender: gender === "Nam",
+	                    username: username,
+	                    password: password,
+	                    role_id: 0
+	                }),
+	                success: function (response) {
+	                    if (response.data) {
+	                        alert("Sign-up successful!");
+	                        window.location.href = "/login/signin";
+	                    } else {
+	                        alert("Sign-up failed. Please try again!");
+	                    }
+	                },
+	                error: function () {
+	                    alert("An error occurred. Please try again later.");
+	                }
+	            });
+	        });
+	    });
+	</script>
+</body>
+</html>

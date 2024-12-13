@@ -1,0 +1,60 @@
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.top-home-page div, .bottom-home-page div{
+    width: 300px;
+    text-align: center;
+}
+h1{
+    font-size: 50px;
+    color: rgb(27, 91, 174);
+}
+h3{
+    color: rgb(30, 167, 240);
+}
+.home-page{
+    background-color: rgb(196, 215, 245);
+    width: 950px;
+    height: 650px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-home-page{
+    border-bottom: 2px solid black;
+}
+
+.top-home-page, .bottom-home-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.top-home-page > *{
+    padding: 10px 20px 10px 20px;
+}
+
+.bottom-home-page > *{
+    cursor: pointer;
+    padding: 15px 25px;
+    border: 1px solid rgb(175, 238, 255);
+    border-radius: 30px;
+    margin: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: background 0.4s ease;
+}
+.bottom-home-page > *:hover{
+    border: 1px solid rgb(175, 238, 255);
+    background-color: #459def;
+    color: white;
+}

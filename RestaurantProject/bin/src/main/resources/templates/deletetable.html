@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Bàn</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/deletetable.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div>
+        <div class="main-screen">
+            <div class="left-bar">
+                <div class="name-of-func"><b>QUẢN LÝ SƠ ĐỒ</b></div>
+                <div class="cashier-infor">Thông tin thu ngân</div>
+                <div class="details-inf">
+                    <div class="cashier-inf">Tên: </div>
+                    <div class="shift-info"></div>
+                </div>
+                <div class="btn-func">
+                    <div onclick="window.location.href='/homepage-cashier/add-table'">Thêm bàn</div>
+                    <div class="delete-btn">Xoá bàn</div>
+                    <div>Đặt trạng thái bàn</div>
+                    <div onclick="window.location.href='/homepage/homepage-cashier'">Thoát</div>
+                </div>
+                <div class="choosetable-to-delete">
+                    <div class="pick-area">
+                        <div><b>Chọn khu vực</b></div>
+                        <select id="area" class="area">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="right-bar">
+                <div class="delete-table">XOÁ BÀN</div>
+                <div class="table-screen">
+                    <div class="tables"></div>
+                    <div class="confirm-deletion">
+                        <div class="ask-confirm">
+                            <div>Bạn muốn xoá bàn A1?</div>
+                            <div class="confirm-btn">Xác nhận xoá</div>
+                        </div>
+                        <div class="table-inf">
+                            <div class="table">
+                                <div>A1</div>
+                                <div>Bàn trống</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear-fix"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lấy tên đầy đủ từ Local Storage
+            const fullname = localStorage.getItem("fullname");
+            console.log("Tên đầy đủ từ Local Storage:", fullname); // Dòng gỡ lỗi
+
+            // Kiểm tra xem tên đầy đủ có sẵn không và thiết lập nó
+            if (fullname) {
+                document.querySelector('.cashier-inf').textContent = `Tên: ${fullname}`;
+            } else {
+                console.error("Không tìm thấy fullname trong LocalStorage.");
+            }
+
+            // Lấy thời gian hiện tại
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+
+            // Kiểm tra "Ca sáng" hay "Ca chiều"
+            let shift = '';
+            if (currentHour >= 6 && currentHour < 12) {
+                shift = "Sáng";
+            } else if (currentHour >= 12 && currentHour < 18) {
+                shift = "Chiều";
+            } else {
+                shift = "Tối";
+            }
+
+            // Hiển thị ca làm việc
+            document.querySelector('.shift-info').textContent = `Ca làm việc: ${shift}`;
+
+            // Lấy danh sách khu vực từ API
+            fetch('/delete-table')
+                .then(response => response.json())
+                .then(data => {
+                    const areaSelect = document.getElementById('area');
+                    data.forEach(area => {
+                        const option = document.createElement('option');
+                        option.value = area.area_id;
+                        option.textContent = area.area_name;
+                        areaSelect.appendChild(option);
+                    });
+
+                    // Chọn khu vực mặc định khi trang tải
+                    const defaultArea = areaSelect.value; // Giả sử khu vực đầu tiên được chọn
+                    if (defaultArea) {
+                        loadTablesByArea(defaultArea);
+                    }
+                })
+                .catch(error => console.error('Error fetching areas:', error));
+
+            // Khi người dùng chọn khu vực
+            document.getElementById('area').addEventListener('change', function () {
+                const areaId = this.value;
+                loadTablesByArea(areaId);
+            });
+
+            // Hàm tải danh sách bàn theo khu vực
+            function loadTablesByArea(areaId) {
+                fetch(`/delete-table/tables-data/${areaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableScreen = document.querySelector('.tables');
+                        tableScreen.innerHTML = ''; // Xóa nội dung cũ
+
+                        data.forEach(table => {
+                            const tableDiv = document.createElement('div');
+                            tableDiv.classList.add('table');
+                            tableDiv.innerHTML = `
+                                <div>${table.table_id}</div>
+                                <div>${table.table_status ? 'Đang sử dụng' : 'Bàn trống'}</div>
+                            `;
+                            tableDiv.addEventListener('click', function () {
+                                updateConfirmDeletion(table);
+                            });
+                            tableScreen.appendChild(tableDiv);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching tables data:', error));
+            }
+
+            // Cập nhật thông tin xác nhận xoá
+            function updateConfirmDeletion(table) {
+                const confirmDeletion = document.querySelector('.confirm-deletion');
+                confirmDeletion.querySelector('.ask-confirm div').textContent =
+                    `Bạn muốn xoá bàn ${table.table_id}?`;
+                confirmDeletion.querySelector('.table-inf .table div:first-child').textContent =
+                    table.table_id;
+                confirmDeletion.style.display = 'flex'; // Đảm bảo confirm-deletion luôn hiển thị
+
+                // Lưu ID bàn vào nút xác nhận
+                document.querySelector('.confirm-btn').dataset.tableId = table.table_id;
+            }
+
+            // Xử lý khi xác nhận xoá
+            document.querySelector('.confirm-btn').addEventListener('click', function () {
+                const tableId = this.dataset.tableId;
+                if (!tableId) return;
+
+                fetch(`/delete-table/delete/${tableId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (response.ok) {
+                            alert(`Đã xoá bàn ${tableId} thành công!`);
+                            location.reload(); // Tải lại trang để cập nhật danh sách
+                        } else {
+                            alert(`Không thể xoá bàn ${tableId}.`);
+                        }
+                    })
+                    .catch(error => console.error('Error deleting table:', error));
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  color: #333;
+}
+
+/* Header */
+.header {
+  background-color: rgb(196, 215, 245);
+  padding: 10px 0; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex; 
+  align-items: center; 
+}
+
+.logo img {
+  width: 100px; 
+  cursor: pointer; 
+  margin-left: 2.25cm; 
+}
+
+.option-bar {
+  margin-left: 10cm;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  background-color: #459def;
+  color: #fff;
+}
+
+.cart-icon {
+  margin-left: auto;
+  margin-right: 2.25cm; 
+}
+
+.cart-button {
+  text-decoration: none;
+}
+
+.cart-btn {
+  padding: 10px;
+  border: none;
+  background-color: #f1f1f1;
+  color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 24px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cart-btn:hover {
+  background-color: #459def; /* Màu nền khi hover */
+  color: #fff; /* Đổi màu khi hover */
+}
+
+.cart-btn i {
+  font-size: 25px;
+}
+/*exit btn*/
+.exit-icon {
+  margin-left: auto;
+  margin-right: 2.25cm; 
+}
+
+.exit-button {
+  text-decoration: none;
+}
+
+.exit-btn {
+  padding: 10px;
+  border: none;
+  background-color: #f1f1f1;
+  color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 24px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.exit-btn:hover {
+  background-color: rgb(255,0,0); /* Màu nền khi hover */
+  color: #fff; /* Đổi màu khi hover */
+}
+
+.exit-btn i {
+  font-size: 25px;
+}
+/* Thanh tìm kiếm */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.search-bar .search-btn {
+  padding: 10px 15px;
+  border: none;
+  background-color: #459def;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar .search-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Menu Items */
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 20px;
+  padding: 20px;
+  max-width:100%;
+  margin: 0 auto;
+}
+
+/* Các item trong menu */
+.menu-item {
+  width: 100%; 
+  max-width: 250px;  
+  height: 350px; 
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hiệu ứng hover cho item */
+.menu-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Cân chỉnh ảnh */
+.menu-item img {
+  width: 100%; 
+  height: 200px; 
+  object-fit: cover; 
+  object-position: center; 
+  margin-bottom: 10px; 
+}
+
+/* Thông tin món ăn */
+.item-info {
+  height: 120px; 
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden; 
+  gap: 5px; 
+}
+
+/* Tên món ăn */
+.item-info h3 {
+  font-size: 18px;
+  margin: 0;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+}
+
+.item-info p {
+  font-size: 16px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.heart-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #ff3b30; 
+  transition: color 0.3s ease;
+  align-self: center; 
+}
+
+.heart-btn:hover {
+  color: #007bff; 
+}
+
+.heart-btn i {
+  font-size: 20px; 
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-items {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  }
+
+  .search-bar input {
+    width: 200px;
+  }
+}

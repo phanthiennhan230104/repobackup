@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+*{
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    width: 950px;
+    height: 650px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.left-panel {
+    width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    position: relative;
+}
+
+.vertical-divider {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 2px;
+    height: 580px;
+    background-color: #ccc;
+}
+
+.left-panel h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.divider {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 10px 0;
+}
+
+.details-inf {
+    margin-bottom: 20px;
+}
+
+.exit-btn {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.exit-btn:hover {
+    background-color: #e55d51;
+}
+
+.right-panel {
+    width: 70%;
+    padding: 20px;
+    border-radius: 0 10px 10px 0;
+}
+
+.right-panel h2 {
+    margin-bottom: 20px;
+}
+
+.form-container {
+    background-color: rgb(196, 215, 245);
+    width: 660px;
+    height: 555px;
+    padding: 35px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 4px;
+}
+
+.checkbox-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group input {
+    margin-right: 10px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.confirm-btn {
+    background-color: rgb(88, 156, 225);
+    color: white;
+    width: 250px;
+    height: 45px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-btn:hover {
+    background-color: rgb(56, 131, 199);
+}
+
+.message-box {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    width: 100%;
+}
+
+.message-box.success-message {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: green;
+}
+
+.message-box.error-message {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: red;
+}
+
+.suggestions {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    width: calc(100% - 20px);
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    margin-top: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+}

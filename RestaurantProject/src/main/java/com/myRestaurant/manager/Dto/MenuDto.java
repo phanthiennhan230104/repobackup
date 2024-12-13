@@ -2,6 +2,7 @@ package com.myRestaurant.manager.Dto;
 
 import lombok.Data;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import com.myRestaurant.manager.Entities.DishType;
 
@@ -13,6 +14,9 @@ public class MenuDto {
     private BigDecimal price;
     private String imagePath;
     private String description;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+ 
 	public int getDishId() {
 		return dishId;
 	}
@@ -49,5 +53,21 @@ public class MenuDto {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+	public Timestamp getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setCreatedAt(Timestamp createdAt) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setUpdatedAt(Timestamp updatedAt) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
     
 }

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Dish</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/DeleteDish.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="vertical-divider"></div>
+            <h2>CHEF MODE</h2>
+            <hr class="divider"> 
+            <div class="details-inf">
+                <div class="chef-inf">Tên: </div>
+                <div class="shift-info"></div>
+            </div>
+            <button class="exit-btn" onclick="window.location.href='/homepage/homepage-chef'">Exit</button>
+        </div>
+    
+        <div class="right-panel">
+            <h2>DELETE DISH</h2>
+            <form id="deleteDishForm" class="form-container">
+                <div class="form-group">
+                    <label for="dish-name">Dish Name(*):</label>
+                    <input type="text" id="dish-name-input" name="dishName" placeholder="Enter dish name" required oninput="searchDishes()">
+                    <div id="suggestions" class="suggestions" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="dish-id">Dish ID:</label>
+                    <input type="text" id="dish-id" name="dishId" placeholder="Dish ID" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="dish-type">Dish Type:</label>
+                    <input type="text" id="dish-type" name="dishType" placeholder="Dish Type" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="text" id="price" name="price" placeholder="Price" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" placeholder="Description"> 
+                </div>
+    
+                <div class="form-group checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="radio" id="delete-permanently" name="delete-option" value="permanently" required>
+                        <label for="delete-permanently">Delete Permanently</label>
+                    </div>
+                </div>
+				<div class="form-buttons">
+				    <button type="button" class="confirm-btn" onclick="deleteDish()">Delete Dish</button>
+				    <button class="confirm-btn" type="reset">Reset</button>
+				</div>
+				<div id="message" style="display:none;" class="message-box">
+				    <div class="alert">
+				        <p id="alert-message"></p>
+				    </div>
+				</div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function searchDishes() {
+            const dishName = document.getElementById('dish-name-input').value;
+    
+            if (dishName.length < 2) {
+                document.getElementById('suggestions').style.display = 'none';
+                return;
+            }
+    
+            fetch(`/deleteDish/autocomplete?name=${dishName}`)
+                .then(response => response.json())
+                .then(suggestions => {
+                    const suggestionsDiv = document.getElementById('suggestions');
+                    suggestionsDiv.innerHTML = '';
+    
+                    if (suggestions.length > 0) {
+                        suggestions.forEach(dish => {
+                            const item = document.createElement('div');
+                            item.className = 'suggestion-item';
+                            item.textContent = dish.dishName;
+                            item.onclick = () => selectDish(dish);
+                            suggestionsDiv.appendChild(item);
+                        });
+                        suggestionsDiv.style.display = 'block';
+                    } else {
+                        suggestionsDiv.style.display = 'none';
+                    }
+                })
+                .catch(error => console.error('Error fetching dishes:', error));
+        }
+
+        function selectDish(dish) {
+            document.getElementById('dish-name-input').value = dish.dishName || '';
+            document.getElementById('dish-id').value = dish.dishId || '';
+            document.getElementById('dish-type').value = dish.dishType || '';
+            document.getElementById('price').value = dish.price || '';
+            document.getElementById('description').value = dish.description || '';
+            document.getElementById('suggestions').style.display = 'none';
+        }
+
+        function deleteDish() {
+            const dishId = document.getElementById('dish-id').value;
+            const dishName = document.getElementById('dish-name-input').value;
+            const dishType = document.getElementById('dish-type').value;
+            const price = document.getElementById('price').value;
+            const description = document.getElementById('description').value;
+
+            if (!dishId || !dishName || !dishType || !price ) {
+                alert("Please fill all required fields.");
+                return;
+            }
+
+            const requestPayload = {
+                dishId: parseInt(dishId),
+                dishName: dishName,
+                dishType: dishType,
+                price: parseInt(price),
+                description: description
+            };
+
+            fetch('/deleteDish', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestPayload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const messageDiv = document.getElementById('message');
+                const alertMessage = document.getElementById('alert-message');
+                
+                if (data.successMessage) {
+                    alertMessage.textContent = data.successMessage;
+                    messageDiv.className = 'alert success-message';  
+                } else {
+                    alertMessage.textContent = data.errorMessage;
+                    messageDiv.className = 'alert error-message';  
+                }
+
+                messageDiv.style.display = 'block';  // Hiển thị thông báo
+            })
+            .catch(error => console.error('Error deleting dish:', error));
+        }
+
+        document.getElementById('deleteDishForm').addEventListener('reset', function() {
+            const messageDiv = document.getElementById('message');
+            messageDiv.style.display = 'none';  // Ẩn thông báo khi reset form
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const fullname = localStorage.getItem("fullname");
+            if (fullname) {
+                document.querySelector('.chef-inf').textContent = "Tên: " + fullname;
+            }
+
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+            let shift = '';
+            if (currentHour >= 6 && currentHour < 12) {
+                shift = "Morning";
+            } else if (currentHour >= 12 && currentHour < 18) {
+                shift = "Afternoon";
+            } else {
+                shift = "Evening";
+            }
+            document.querySelector('.shift-info').textContent = "Shift: " + shift;
+        });
+    </script>
+</body>
+</html>

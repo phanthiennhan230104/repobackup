@@ -36,4 +36,6 @@ public class MenuController {
         model.addAttribute("menuItems", menuItems);
         return "menu";
     }
+    
+    
 }

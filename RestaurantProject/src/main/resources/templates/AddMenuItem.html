@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Menu Item</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/AddMenuItem.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="vertical-divider"></div>
+            <h1>CHEF MODE</h1>
+            <hr class="divider">
+            <div class="details-inf">
+                    <div class="chef-inf">Tên: </div>
+                    <div class="shift-info"></div>
+            </div>
+            <button class="exit-btn" onclick="window.location.href='/homepage/homepage-chef'">Exit</button>
+        </div>
+
+        <div class="right-panel">
+            <h1>ADD MENU ITEM</h1>
+            <form action="/menu/add" method="POST" enctype="multipart/form-data" class="form-container">
+                <div class="form-group">
+                    <label for="dish-name">Dish Name:</label>
+                    <input type="text" id="dish-name" name="dishName" placeholder="Enter dish name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dish-type">Dish Type:</label>
+                    <select id="dish-type" name="dishType" required>
+                        <option value="Dish">Dish</option>
+                        <option value="Drink">Drink</option>
+                        <option value="Combo">Combo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" step="0.01" id="price" name="price" placeholder="Enter price" required>
+                </div>
+                <div class="form-group image-group">
+                    <label for="image-upload">Add Image:</label>
+                    <div class="image-input">
+                        <input type="file" id="image-upload" name="image" accept="image/*" onchange="previewImage(event)" required>
+                        <div class="image-preview" id="image-preview"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4" placeholder="Enter description (optional)"></textarea>
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="confirm-btn">Confirm</button>
+                    <div class="notification" id="notification">
+                        <!-- Hiển thị thông báo thành công -->
+                        <span style="color: green; font-weight: bold;">
+                            <th:block th:if="${successMessage}">
+                                <p th:text="${successMessage}"></p>
+                            </th:block>
+                        </span>
+
+                        <span style="color: red; font-weight: bold;">
+                            <th:block th:if="${errorMessage}">
+                                <p th:text="${errorMessage}"></p>
+                            </th:block>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Preview uploaded image
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    preview.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Calculate and display shift based on the current time
+        
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+
+            if (file) {
+                // Kiểm tra kích thước file (tối đa 10MB)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert("File size exceeds the maximum limit of 10MB. Please upload a smaller file.");
+                    event.target.value = ''; // Reset input file
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    preview.appendChild(img);
+                };
+
+                reader.readAsDataURL(file);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const fullname = localStorage.getItem("fullname");
+            if (fullname) {
+                document.querySelector('.chef-inf').textContent = "Tên: " + fullname;
+            }
+
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+            let shift = '';
+            if (currentHour >= 6 && currentHour < 12) {
+                shift = "Morning";
+            } else if (currentHour >= 12 && currentHour < 18) {
+                shift = "Afternoon";
+            } else {
+                shift = "Evening";
+            }
+            document.querySelector('.shift-info').textContent = "Shift: " + shift;
+        });
+    </script>
+</body>
+</html>

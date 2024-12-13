@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/manageaccount.css}"/>
+    <link rel="icon" href="data:,">
+    <title>Manage Account</title>
+</head>
+<body>
+    <div>
+        <div class="main-screen">
+            <div class = "left-bar">
+                <div class = "name-of-func"><b>QUẢN LÝ TÀI KHOẢN</b></div>
+                <div class = "cashier-infor">Thông tin admin</div>
+                <div class = "details-inf">
+                    <div class = "cashier-inf">Tên: <span id="admin-name"></span></div>
+                </div>
+                <div class = "btn-func">
+                    <div class = "list-account">Danh sách tài khoản</div>
+                    <div class = "add-btn" onclick="window.location.href='/homepage-admin/add-account'">Thêm tài khoản</div>
+                    <div class = "edit-btn" onclick="window.location.href='/user'">Thêm tài khoản</div>
+                    <div onclick="window.location.href='/homepage/homepage-admin'">Thoát</div>
+                </div>
+                <div class="choosetable-to-delete">
+                    <div class = "find-username">
+                        <div><b>Tìm username</b></div>
+                        <!-- <input class = "table-list" type="text" list="table"> -->
+                        <input type="text" id = "find-by-username">
+                    </div>
+                </div>
+            </div>
+            <div class = "right-bar">
+                <div class = "delete-table">DANH SÁCH TÀI KHOẢN</div>
+                <div class = "table-screen">
+                    <table>
+                    	<thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+						    <tr th:each="user : ${users}">
+						        <td th:text="${user.id}"></td>
+						        <td th:text="${user.username}"></td>
+						        <td th:text="${user.roleDto.role_name}"></td>
+						        <td>
+						            <a class="edit-button" th:href="@{/homepage-admin/edit-account/{id}(id=${user.id})}">Sửa</a>
+						            <button class="delete-button" th:onclick="'confirmDelete(' + ${user.id} + ')'" >Xoá</button>
+						        </td>
+						    </tr>
+						</tbody>
+                    </table>
+                </div>
+            </div>
+            <div class = "clear-fix"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+	    document.addEventListener('DOMContentLoaded', function () {
+	        const fullname = localStorage.getItem("fullname");
+	        if (fullname) {
+	            document.getElementById('admin-name').textContent = fullname;  // Hiển thị tên admin
+	        }
+	    });
+	    document.addEventListener('DOMContentLoaded', function () {
+	        const inputField = document.getElementById('find-by-username');
+	        const tbody = document.querySelector('.table-screen tbody');
+
+	        // Lắng nghe sự kiện nhập
+	        inputField.addEventListener('input', function () {
+	            const username = inputField.value;
+
+	            // Gửi yêu cầu tìm kiếm
+	            fetch(`/homepage-admin/manage-account/search?username=${encodeURIComponent(username)}`)
+	                .then(response => response.json())
+	                .then(data => {
+	                    // Xóa danh sách cũ
+	                    tbody.innerHTML = '';
+
+	                    // Cập nhật danh sách mới
+	                    data.forEach(user => {
+	                        const row = document.createElement('tr');
+	                        row.innerHTML = `
+	                            <td>${user.id}</td>
+	                            <td>${user.username}</td>
+	                            <td>${user.roleDto.role_name}</td>
+	                            <td>
+	                                <button class="edit-button" onclick="location.href='/homepage-admin/edit-account/${user.id}'">Sửa</button>
+	                                <button class="delete-button" onclick="confirmDelete(${user.id})">Xoá</button>
+	                            </td>
+	                        `;
+	                        tbody.appendChild(row);
+	                    });
+	                })
+	                .catch(error => {
+	                    console.error('Error fetching users:', error);
+	                });
+	        });
+	    });
+	    function confirmDelete(userId) {
+	        if (window.confirm("Are you sure you want to delete this user?")) {
+	            // Gửi yêu cầu xóa tới API
+	            fetch(`/homepage-admin/manage-account/delete/${userId}`, {
+	                method: 'DELETE'
+	            })
+	            .then(response => response.json())
+	            .then(data => {
+	                if (data.data) {
+	                    alert("User deleted successfully");
+	                    // Reload lại trang hoặc cập nhật lại danh sách người dùng
+	                    location.reload();
+	                } else {
+	                    alert("User not found");
+	                }
+	            })
+	            .catch(error => {
+	                alert("Error occurred while deleting");
+	                console.error(error);
+	            });
+	        }
+	    }
+    </script>
+</body>
+</html>

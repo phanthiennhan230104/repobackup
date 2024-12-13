@@ -1,0 +1,221 @@
+/* Tổng quát */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 950px;
+    height: 650px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(196, 215, 245);
+    border: 2px solid black;
+}
+
+/* Left Panel */
+.left-panel {
+    width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px 0 0 10px;
+    position: relative;
+}
+
+.vertical-divider {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 2px;
+    height: 580px;
+    background-color: #ccc;
+}
+
+.left-panel h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.divider {
+    border: none;
+    border-top: 2px solid #ccc;
+    margin: 10px 0;
+}
+table, th, td {
+    border: none;
+}
+
+/* Khung tìm kiếm */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 20px;
+}
+
+.search-input {
+    width: 80%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.search-btn:hover {
+    background-color: #0056b3;
+}
+
+.exit-btn {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.exit-btn:hover {
+    background-color: #e55d51;
+}
+
+/* Right Panel */
+.right-panel {
+    width: 75%; /* Để đảm bảo nó phù hợp với container */
+    padding: 20px;
+    border-radius: 0 10px 10px 0;
+    display: flex; /* Flexbox để căn chỉnh */
+    flex-direction: column;
+    justify-content: flex-start; /* Căn nội dung lên trên */
+    overflow: hidden; /* Ẩn các phần tràn */
+}
+
+/* Table Container */
+.table-container {
+    margin-top: 10px; /* Giảm khoảng cách giữa form và bảng */
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Căn giữa bảng theo chiều ngang */
+    align-items: flex-start;
+}
+
+/* Table */
+table {
+    width: 95%; /* Giảm chiều rộng bảng để nó vừa vặn trong container */
+    height: 40px; /* Đặt chiều cao bảng */
+    border-collapse: collapse;
+}
+
+table th, table td {
+    text-align: center;
+    padding: 10px;
+}
+
+table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+table td {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Form Container */
+.form-container {
+    background-color: rgb(196, 215, 245);
+    width: 100%; /* Giữ nguyên chiều rộng 100% của form */
+    height: 100%; /* Để form tự động điều chỉnh chiều cao */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: auto; /* Đảm bảo nội dung không tràn ra ngoài */
+}
+
+/* Kiểu cho trường nhập ngày */
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #333;
+    outline: none;
+    transition: border 0.3s ease;
+}
+
+input[type="date"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Checkbox trên cùng một hàng */
+.gender-options {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa các checkbox */
+}
+
+.gender-options input[type="checkbox"] {
+    transform: scale(1.2); /* Tăng kích thước checkbox */
+}
+
+.gender-options label {
+    font-size: 16px;
+}
+
+/* Button */
+.confirm-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    width: 48%;
+    border-radius: 5px;
+}
+
+.confirm-btn:hover {
+    background-color: #21883f;
+}
+
+table td a:hover {
+    text-decoration: underline;
+}
+
+.search-result {
+    margin-top: 10px;
+    font-size: 14px;
+}

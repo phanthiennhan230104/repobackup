@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/pay.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div>
+        <div class="main-screen">
+            <div class="left-bar">
+                <div class="name-of-func"><b>THANH TOÁN</b></div>
+                <div class="cashier-infor">Thông tin thu ngân</div>
+                <div class="details-inf">
+                    <div class="cashier-inf">Tên: </div>
+                    <div class="shift-info"></div>
+                </div>
+                <div class="btn-func">
+                    <div class="add-btn">Danh sách hoá đơn</div>
+                    <div onclick="window.location.href='/homepage/homepage-cashier'">Thoát</div>
+                </div>
+                <div class="choosetable-to-delete">
+                    <div class="find-table-id">
+					    <div><b>Tìm Table ID</b></div>
+					    <input type="text" id="find-by-table-id">
+					</div>
+                </div>
+            </div>
+            <div class="right-bar">
+                <div class="delete-table">DANH SÁCH HÓA ĐƠN</div>
+                <div class="table-screen">
+                     <table>
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>User ID</th>
+                                <th>Table ID</th>
+                                <th>Total</th>
+                                <th>Function</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="invoice : ${invoices}" data-invoice-id="${invoice.invoiceId}">
+                            	<td th:text="${invoice.invoiceId}"></td>
+                                <td th:text="${invoice.userId}"></td>
+                                <td th:text="${invoice.tableId}"></td>
+                                <td th:text="${invoice.sum} + 'đ'"></td>
+                                <td>
+                                    <a class="edit-button" th:href="@{/homepage-cashier/invoice-pay/detail-invoice/{id}(id=${invoice.invoiceId})}">Chi tiết</a>
+                                    <button class="delete-button" th:onclick="'confirmPayment(' + ${invoice.invoiceId} + ')'" >Thanh toán</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="clear-fix"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const fullname = localStorage.getItem("fullname");
+            if (fullname) {
+                document.querySelector('.cashier-inf').textContent = `Tên: ${fullname}`;
+            }
+
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+            let shift = '';
+            if (currentHour >= 6 && currentHour < 12) {
+                shift = "Sáng";
+            } else if (currentHour >= 12 && currentHour < 18) {
+                shift = "Chiều";
+            } else {
+                shift = "Tối";
+            }
+            document.querySelector('.shift-info').textContent = `Ca làm việc: ${shift}`;
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputField = document.getElementById('find-by-table-id');
+            const tbody = document.querySelector('.table-screen tbody');
+
+            inputField.addEventListener('input', function () {
+                const tableId = inputField.value;
+
+                fetch(`/homepage-cashier/pay/search-invoice?tableId=${encodeURIComponent(tableId)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        tbody.innerHTML = '';  // Xóa danh sách cũ
+
+                        // Cập nhật danh sách hóa đơn mới
+                        data.forEach(invoice => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${invoice.invoiceId}</td>
+                                <td>${invoice.userId}</td>
+                                <td>${invoice.tableId}</td>
+                                <td>${invoice.sum}đ</td>
+                                <td>
+                                <a class="edit-button" th:href="@{/homepage-cashier/invoice-pay/detail-invoice/{id}(id=${invoice.invoiceId})}">Chi tiết</a>
+                                    <button class="delete-button" onclick="confirmPayment(${invoice.invoiceId})">Thanh toán</button>
+                                </td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching invoices:', error);
+                    });
+            });
+        });
+
+        function confirmPayment(invoiceId) {
+            if (window.confirm("Bạn có muốn thanh toán cho bàn này không?")) {
+                fetch(`/homepage-cashier/pay/payment/${invoiceId}`, {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 200) { // Kiểm tra trạng thái trả về từ backend
+                        alert("Thanh toán thành công");
+
+                        // Cập nhật trạng thái bàn
+                        const tableId = data.tableId; // Dữ liệu trả về phải bao gồm tableId
+                        fetch(`/homepage-cashier/pay/update-table-status/${tableId}`, {
+                            method: 'POST'
+                        })
+                        .then(response => response.json())
+                        .then(() => {
+                            // Sau khi cập nhật, lấy lại danh sách hóa đơn
+                            fetch('/homepage-cashier/pay/list-invoice')
+                                .then(response => response.json())
+                                .then(newInvoices => {
+                                    const tbody = document.querySelector('.table-screen tbody');
+                                    tbody.innerHTML = ''; // Xóa danh sách cũ
+
+                                    // Cập nhật danh sách mới
+                                    newInvoices.forEach(invoice => {
+                                        const row = document.createElement('tr');
+                                        row.innerHTML = `
+                                            <td>${invoice.invoiceId}</td>
+                                            <td>${invoice.userId}</td>
+                                            <td>${invoice.tableId}</td>
+                                            <td>${invoice.sum}đ</td>
+                                            <td>
+                                            <a class="edit-button" th:href="@{/homepage-cashier/invoice-pay/detail-invoice/{id}(id=${invoice.invoiceId})}">Chi tiết</a>
+                                                <button class="delete-button" onclick="confirmPayment(${invoice.invoiceId})">Thanh toán</button>
+                                            </td>
+                                        `;
+                                        tbody.appendChild(row);
+                                    });
+                                })
+                                .catch(error => console.error('Error fetching invoices:', error));
+                        })
+                        .catch(error => console.error('Error updating table status:', error));
+                    } else {
+                        alert("Đã có lỗi xảy ra khi thanh toán");
+                    }
+                })
+                .catch(error => {
+                    alert("Đã có lỗi xảy ra");
+                    console.error(error);
+                });
+            }
+        }
+    </script>
+</body>
+</html>

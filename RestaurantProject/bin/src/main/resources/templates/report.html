@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo doanh thu</title>
+    <link rel="stylesheet" href="/assets/css/report.css">
+</head>
+<body>
+    <div class="main-screen">
+        <div class="left-bar">
+            <div class="name-of-func">
+                <b>DOANH THU</b>
+            </div>
+            <div class="btn-func">
+                <div onclick="window.location.href='/homepage/homepage-cashier'">Thoát</div>
+            </div>
+        </div>
+        <div class="right-bar">
+            <div class="delete-table">BÁO CÁO DOANH THU</div>
+            <div class="table-screen">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stt</th>
+                            <th>Tên Món</th>
+                            <th>Đơn Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="report, stat : ${revenueReports}">
+                            <td th:text="${stat.index + 1}"></td>
+                            <td th:text="${report.getDishName()}"></td>
+                            <td th:text="${report.getFormattedPrice()}"></td>
+                            <td th:text="${report.getQuantity()}"></td>
+                            <td th:text="${report.	getFormattedTotalPrice()}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="sum-and-btn">
+                    <div class="sum">
+                        Tổng: <span th:text="${totalAmount}"></span> đ <!-- Hiển thị tổng đã định dạng -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
