@@ -19,12 +19,12 @@
                 <div class = "btn-func">
                     <div class = "list-account">Danh sách tài khoản</div>
                     <div class = "add-btn" onclick="window.location.href='/homepage-admin/add-account'">Thêm tài khoản</div>
-                    <div class = "edit-btn" onclick="window.location.href='/user'">Thêm tài khoản</div>
-                    <div onclick="window.location.href='/homepage/homepage-admin'">Thoát</div>
+                    <div class = "edit-btn" onclick="window.location.href='/user'">Sửa tài khoản</div>
+                    <div class = "exit-btn" onclick="window.location.href='/homepage/homepage-admin'">Thoát</div>
                 </div>
                 <div class="choosetable-to-delete">
                     <div class = "find-username">
-                        <div><b>Tìm username</b></div>
+                        <div><b>Tìm Tài Khoản</b></div>
                         <!-- <input class = "table-list" type="text" list="table"> -->
                         <input type="text" id = "find-by-username">
                     </div>
@@ -37,9 +37,9 @@
                     	<thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Username</th>
+                                <th>Tên Đăng Nhập</th>
                                 <th>Role</th>
-                                <th>Chức năng</th>
+                                <th>Chức Năng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +48,6 @@
 						        <td th:text="${user.username}"></td>
 						        <td th:text="${user.roleDto.role_name}"></td>
 						        <td>
-						            <a class="edit-button" th:href="@{/homepage-admin/edit-account/{id}(id=${user.id})}">Sửa</a>
 						            <button class="delete-button" th:onclick="'confirmDelete(' + ${user.id} + ')'" >Xoá</button>
 						        </td>
 						    </tr>

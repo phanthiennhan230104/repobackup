@@ -102,7 +102,7 @@ datalist{
 }
 
 .table-screen{
-    background-color: rgb(196, 215, 245);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     width: 620px;
     height: 90%;
     border-radius: 10px;
@@ -145,4 +145,13 @@ datalist{
 }
 .ordered{
     background-color: rgb(180, 178, 178);
+}
+.exit-btn{
+	cursor: pointer;
+    padding: 10px 20px;
+    background-color: rgb(196, 215, 245);
+    border-radius: 10px;
+}
+.exit-btn:hover {
+    background-color: #e55d51;
 }

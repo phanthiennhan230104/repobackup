@@ -95,7 +95,7 @@ body{
     z-index: 0;
     height: calc(100% - 50px); /* Chiều cao của table-screen chiếm phần còn lại */
     width: 100%;
-    background-color: var(--color-main);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     border-radius: 10px;
     padding: 20px;
     display: flex;
@@ -171,7 +171,7 @@ tbody button{
     width: 950px;
     height: 650px;
     border-radius: 30px;
-    background-color: rgb(198, 232, 241);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
 }
 .title{
     text-align: center;
@@ -204,7 +204,7 @@ tbody button{
 .button button{
     padding: 10px 30px;
     border-radius: 10px;
-    background-color: #7DC0FF;
+    background-color:rgb(27, 91, 174);
     color: white;
     font-weight: 500;
 }

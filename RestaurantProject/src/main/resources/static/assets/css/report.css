@@ -120,7 +120,7 @@ body{
     z-index: 0;
     height: calc(100% - 50px);
     width: 100%;
-    background-color: var(--color-main);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     border-radius: 10px;
     padding: 20px;
 }
@@ -235,4 +235,11 @@ tbody td{
     padding: 4px 6px;
     border-radius: 5px;
     background-color: #e1f0ff;
+}
+
+.exit-btn:hover{
+	background: #e55d51;
+}
+table th{
+	background-color: #f0f0f0;
 }

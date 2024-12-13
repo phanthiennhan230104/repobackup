@@ -16,10 +16,10 @@
 			<div class="vertical-divider"></div>
 			<h1>ADMIN MODE</h1>
 			<hr class="divider">
-			<button class="exit-btn" onclick="window.location.href='/user'">Exit</button>
+			<button class="exit-btn" onclick="window.location.href='/user'">Thoát</button>
 		</div>
 		<div class="right-panel">
-			<h1>EDIT ACCOUNT</h1>
+			<h1>CHỈNH SỬA TÀI KHOẢN</h1>
 			<form th:action="@{/saveuser}" th:object="${user}" method="post"
 				class="form-container">
 
@@ -28,25 +28,25 @@
 						th:field="*{id}" readonly="readonly" />
 				</div>
 				<div class="form-group">
-					<label for="NewDateOfBirth">Full Name</label> <input type="text"
+					<label for="NewDateOfBirth">Họ Và Tên</label> <input type="text"
 						th:field="*{fullname}" />
 				</div>
 				
 				<div class="form-group">
-					<label for="NewPhoneNumber">Phone Number</label> <input type="text"
+					<label for="NewPhoneNumber">Số Điện Thoại</label> <input type="text"
 						th:field="*{phoneNumber}" />
 				</div>
 				 
 				<div class="form-group">
-					<label for="NewPassword">New Password:</label> <input type="text"
+					<label for="NewPassword">Mật Khẩu Mới:</label> <input type="text"
 						th:field="*{password}" />
 				</div>
 				<div class="form-group">
-					<label for="NewDateofBirth">New Date Of Birth:</label> <input
+					<label for="NewDateofBirth">Ngày Sinh Mới:</label> <input
 						type="text" th:field="*{dateOfBirth}" />
 				</div>
 				<div class="form-group">
-					<label for="NewRole">New Role:</label> <select
+					<label for="NewRole">Role Mới:</label> <select
 						th:field="*{roleEntities.role_id}">
 						<option value="0">Role 0</option>
 						<option value="1">Role 1</option>
@@ -57,7 +57,7 @@
 
 
 				<div class="form-footer">
-					<button type="submit" class="confirm-btn">Confirm</button>
+					<button type="submit" class="confirm-btn">Xác Nhận</button>
 				</div>
 			</form>
 		</div>

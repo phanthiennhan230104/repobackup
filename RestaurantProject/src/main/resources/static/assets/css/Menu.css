@@ -1,5 +1,5 @@
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
@@ -14,7 +14,7 @@ h1 {
 
 /* Header */
 .header {
-  background-color: rgb(196, 215, 245);
+  background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
   padding: 10px 0; 
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
   display: flex; 
@@ -50,37 +50,6 @@ h1 {
   color: #fff;
 }
 
-.cart-icon {
-  margin-left: auto;
-  margin-right: 2.25cm; 
-}
-
-.cart-button {
-  text-decoration: none;
-}
-
-.cart-btn {
-  padding: 10px;
-  border: none;
-  background-color: #f1f1f1;
-  color: #333;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 24px; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.cart-btn:hover {
-  background-color: #459def; /* Màu nền khi hover */
-  color: #fff; /* Đổi màu khi hover */
-}
-
-.cart-btn i {
-  font-size: 25px;
-}
 /*exit btn*/
 .exit-icon {
   margin-left: auto;
@@ -106,7 +75,7 @@ h1 {
 }
 
 .exit-btn:hover {
-  background-color: rgb(255,0,0); /* Màu nền khi hover */
+  background-color: #e55d51; /* Màu nền khi hover */
   color: #fff; /* Đổi màu khi hover */
 }
 

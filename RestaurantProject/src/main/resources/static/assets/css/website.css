@@ -22,7 +22,7 @@ section nav {
     align-items: center;
     position: fixed;
     width: 100%;
-    background: rgb(196, 215, 245);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     z-index: 1000;
 }
@@ -93,7 +93,7 @@ section .main .main_text h1 {
 section .main .main_text h1 span {
     margin-left: 15px;
     color: rgb(30,144,255);
-    font-family: 'MV Boli';
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 70px;
 }
 
@@ -140,7 +140,7 @@ section p {
 
 .about .about_main .about_text h1 span {
     color: rgb(30,144,255);
-    font-family: 'MV Boli';
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .about .about_main .about_text h3 {
@@ -163,6 +163,7 @@ section p {
 }
 
 .menu h1{
+	 color: rgb(30,144,255);
     font-size: 55px;
     display: flex;
     align-items: center;
@@ -173,7 +174,7 @@ section p {
 .menu h1 span{
     color: rgb(30,144,255);
     margin-left: 15px;
-    font-family: mv boli;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .menu h1 span::after{
@@ -314,7 +315,7 @@ section p {
 
 .order h1 span {
     color: rgb(30,144,255);
-    font-family: 'MV Boli';
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .order .order_main {
@@ -497,4 +498,27 @@ footer .footer_main .footer_tag i:hover {
         width: 90%; 
         padding: 20px;
     }
+}
+
+.footer_tag button {
+    background-color: transparent; /* Không có nền */
+    border: none; /* Loại bỏ viền */
+    font-size: 25px; /* Kích thước icon */
+    color: #000; /* Màu mặc định */
+    cursor: pointer; /* Con trỏ thay đổi khi hover */
+    margin-right: 0.2cm; /* Khoảng cách giữa các button */
+    transition: 0.3s; /* Thêm hiệu ứng chuyển động */
+}
+
+.footer_tag button:hover {
+    color: rgb(30,144,255); /* Màu thay đổi khi hover */
+    transform: scale(1.1); /* Phóng to button khi hover */
+}
+
+.footer_tag button:focus {
+    outline: none; /* Loại bỏ viền khi chọn */
+}
+
+.footer_tag button:last-child {
+    margin-right: 0; /* Xóa khoảng cách ở button cuối */
 }

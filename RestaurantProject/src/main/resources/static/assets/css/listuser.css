@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 body {
@@ -93,8 +93,9 @@ table, th, td {
 }
 
 .exit-btn {
-    background-color: #ff6f61;
-    color: white;
+    background-color: rgb(196, 215, 245)	;
+    font-weight:bold;
+    color: Black;
     border: none;
     padding: 15px;
     width: 100%;
@@ -152,7 +153,7 @@ table td {
 
 /* Form Container */
 .form-container {
-    background-color: rgb(196, 215, 245);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     width: 100%; /* Giữ nguyên chiều rộng 100% của form */
     height: 100%; /* Để form tự động điều chỉnh chiều cao */
     padding: 20px;
@@ -219,3 +220,25 @@ table td a:hover {
     margin-top: 10px;
     font-size: 14px;
 }
+table th, table td {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.update-btn, .delete-btn{
+    border-radius: 6px;
+    margin: 0px 4px;
+    padding: 5px 7px;
+    text-decoration-line: none;
+}
+.update-btn{
+    background-color: green;
+    color: white;
+}
+.delete-btn{
+    background-color: red;
+    color: white;
+}
+

@@ -17,27 +17,27 @@
 			<h1>ADMIN MODE</h1>
 			<hr class="divider">
 			<button class="exit-btn"
-				onclick="window.location.href='homepageadmin.html'">Exit</button>
+				onclick="window.location.href='/homepage-admin/manage-account'">Thoát</button>
 		</div>
 		<div class="right-panel">
-			<h1>List Account</h1>
+			<h1>DANH SÁCH TÀI KHOẢN</h1>
 			<form class="form-container">
 				<table border="1" cellpadding="10">
 					<thead>
 						<tr>
-							<th>User ID</th>
-							<th>Full Name</th>
-							<th>User Name</th>
-							<th>Actions</th>
+							<th>ID Người Dùng</th>
+							<th>Họ Và Tên</th>
+							<th>Tên Đăng Nhập</th>
+							<th>Chức Năng</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="user : ${listUsers}">
-							<td th:text="${user.id}">User ID</td>
-							<td th:text="${user.fullname}">Full Name</td>
-							<td th:text="${user.username}">User Name</td>
-							<td><a th:href="@{/edituser/{id}(id=${user.id})}">Update</a> 
-							<a th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
+							<td th:text="${user.id}">ID Người Dùnh</td>
+							<td th:text="${user.fullname}">Họ Và Tên</td>
+							<td th:text="${user.username}">Tên Đăng Nhập</td>
+							<td><a th:href="@{/edituser/{id}(id=${user.id})}" class = "update-btn">Sửa</a> 
+							
 						</tr>
 					</tbody>
 				</table>

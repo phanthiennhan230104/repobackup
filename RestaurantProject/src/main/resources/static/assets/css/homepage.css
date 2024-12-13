@@ -17,7 +17,7 @@ body{
     align-items: center;
 }
 .logo{
-    background-image: url("/assets/img/homepage.png");
+    background-image: url("/assets/img/Logo.png");
     width: 300px;
     height: 250px;
     border-radius: 15px;
@@ -38,7 +38,7 @@ body{
     color:black;
 }
 .right-content{
-    background-color: rgb(196, 215, 245);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     float: right;
     width: 48%;
     height: 600px;

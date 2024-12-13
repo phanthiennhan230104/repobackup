@@ -63,7 +63,7 @@ body{
 }
 
 .exit-btn {
-    background-color: #ff6f61; 
+    background-color: rgb(196, 215, 245); 
     color: white;
     border: none;
     padding: 15px;
@@ -106,7 +106,7 @@ body{
 }
 
 .form-container {
-    background-color: rgb(196, 215, 245);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
     width: 660px;
     height: 555px;
     padding: 40px; 

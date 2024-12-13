@@ -19,7 +19,7 @@
                 <div class = "btn-func">
                     <div class = "list-account" onclick="window.location.href='/homepage-admin/manage-account'">Danh sách tài khoản</div>
                     <div class = "add-account" onclick="window.location.href='/homepage-admin/add-account'">Thêm tài khoản</div>
-                    <div onclick="window.location.href='/homepage/homepage-admin'">Thoát</div>
+                    <div onclick="window.location.href='/homepage-admin/manage-account'">Thoát</div>
                 </div>
                 <!-- <div class="choosetable-to-delete">
                     <div class = "username">
@@ -34,27 +34,27 @@
                     <form action="@{/homepage-admin/add-account}" method="POST">
                         <div class = "information">
 		                    <div class="fullname">
-		                        <label for="">Fullname</label><br>
+		                        <label for="">Họ Và Tên</label><br>
 		                        <input type="text" name = "fullname" id = "fullname">
 		                    </div>
 		                    <div class="phone-number">
-		                        <label for="">Phone Number</label><br>
+		                        <label for="">Số Điện Thoại</label><br>
 		                        <input type="text" name = "phonenumber" id = "phonenumber">
 		                    </div>
 		                    <div class="dateofbirth">
-		                        <label for="">Date Of Birth</label><br>
+		                        <label for="">Ngày Sinh</label><br>
 		                        <input type="date" name = "dateofbirth" id = "dateofbirth">
 		                    </div>
 		                    <div class="gender">
-		                        <label for="">Gender</label><br>
+		                        <label for="">Giới Tính</label><br>
 		                        <div class = "details-gender">
 		                            <div>
-		                                <label for="" class = "Nam" style="font-weight: lighter;">Male</label>
+		                                <label for="" class = "Nam" style="font-weight: lighter;">Nam</label>
 		                                <input type="radio" value="Nam" name = "gender" id = "gender-male">
 		                            </div>
 		
 		                            <div>
-		                                <label for="" class = "Nu" style="font-weight: lighter;">Female</label>
+		                                <label for="" class = "Nu" style="font-weight: lighter;">Nữ</label>
 		                                <input type="radio" value="Nu" name = "gender" id = "gender-female">
 		                            </div>
 		                            <!-- <div>
@@ -65,22 +65,22 @@
 		                    </div>
 		                    <div class = "account">
 		                        <div class = "username">
-		                            <label for="">Username</label><br>
+		                            <label for="">Tên Đăng Nhập</label><br>
 		                            <input type="text" name = "username" id = "username">
 		                        </div>
 		                        <div class = "password">
-		                            <label for="">Password</label><br>
+		                            <label for="">Mật Khẩu</label><br>
 		                            <input type="password" name = "password" id = "password">
 		                        </div>
 		                        <div class = "confirm-password">
-		                            <label for="">Password</label><br>
+		                            <label for="">Nhập Lại Mật Khẩu</label><br>
 		                            <input type="password" name = "confirm-password" id = "confirm-password">
 		                        </div>
 		                    </div>
 		                    <input type="hidden" id="role_id" name="role_id" value="0">
 		                    <div class = "button">
 		                        <button type="button" class = "clear-btn">Clear</button>
-		                        <button id = "btn-signup" type="button">Sign Up</button>
+		                        <button id = "btn-signup" type="button">Đăng Ký</button>
 		                    </div>
 		                </div>
                     </form>
