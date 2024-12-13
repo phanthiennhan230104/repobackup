@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/userinformation.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div>
+        <div class="main-screen">
+            <div class = "left-bar">
+                <div class = "name-of-func"><b>QUẢN LÝ TÀI KHOẢN</b></div>
+                <div class = "cashier-infor">Thông tin admin</div>
+                <div class = "details-inf">
+                    <div class = "cashier-inf">Tên: <span id="admin-name"></span></div>
+                </div>
+                <div class = "btn-func">
+                    <div class = "list-account" onclick="window.location.href='/homepage-admin/manage-account'">Danh sách tài khoản</div>
+                    <div class = "add-account" onclick="window.location.href='/homepage-admin/add-account'">Thêm tài khoản</div>
+                    <div onclick="window.location.href='/homepage/homepage-admin'">Thoát</div>
+                </div>
+                <!-- <div class="choosetable-to-delete">
+                    <div class = "username">
+                        <div><b>Tìm username</b></div>
+                        <input type="text" id = "table-id">
+                    </div>
+                </div> -->
+            </div>
+            <div class = "right-bar">
+                <div class = "delete-table">Thông tin tài khoản</div>
+                <div class = "table-screen">
+                    <form action="@{/homepage-admin/update-user}" method="POST">
+					    <input type="hidden" name="id" th:value="${user.id}"/> <!-- Để gửi ID người dùng -->
+					    <div class="information">
+					        <div class="fullname">
+					            <label for="">Fullname</label><br>
+					            <input type="text" name="fullname" id="fullname" th:value="${user.fullname}" required>
+					        </div>
+					        <div class="phone-number">
+					            <label for="">Phone Number</label><br>
+					            <input type="text" name="phonenumber" id="phonenumber" th:value="${user.phoneNumber}" required>
+					        </div>
+					        <div class="dateofbirth">
+					            <label for="">Date Of Birth</label><br>
+					            <input type="date" name="dateofbirth" id="dateofbirth" th:value="${user.dateOfBirth}" required>
+					        </div>
+					        <div class="gender">
+					            <label for="">Gender</label><br>
+					            <div class="details-gender">
+					                <div>
+					                    <label for="" class="Nam" style="font-weight: lighter;">Male</label>
+					                    <input type="radio" value="Nam" name="gender" id="gender-male" th:checked="${user.gender == 'Nam'}">
+					                </div>
+					                <div>
+					                    <label for="" class="Nu" style="font-weight: lighter;">Female</label>
+					                    <input type="radio" value="Nu" name="gender" id="gender-female" th:checked="${user.gender == 'Nu'}">
+					                </div>
+					            </div>
+					        </div>
+					        <div class="account">
+					            <div class="username">
+					                <label for="">Username</label><br>
+					                <input type="text" name="username" id="username" th:value="${user.username}" required>
+					            </div>
+					            <div class="role-label">Role</div>
+					            <select name="role" id="role-id" class="role-id">
+					                <option th:value="0" th:text="'Người dùng'" th:selected="${user.roleDto.role_id == 0}"></option>
+					                <option th:value="1" th:text="'Admin'" th:selected="${user.roleDto.role_id == 1}"></option>
+					                <option th:value="2" th:text="'Thu ngân'" th:selected="${user.roleDto.role_id == 2}"></option>
+					                <option th:value="3" th:text="'Đầu bếp'" th:selected="${user.roleDto.role_id == 3}"></option>
+					            </select>
+					        </div>
+					        <div class="button">
+					            <button type="submit" class="confirm">Confirm</button>
+					        </div>
+					    </div>
+					</form>
+                </div>
+            </div>
+            <div class = "clear-fix"></div>
+        </div>
+    </div>
+</body>
+</html>

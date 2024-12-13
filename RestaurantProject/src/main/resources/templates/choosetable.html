@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/choosetable.css}"/>
+    <link rel="icon" href="data:,">
+    <title>Chọn bàn</title>
+</head>
+<body>
+    <div class="choose-table">
+        <div class="left-content">
+            <div class="table-code"><b>TABLE CODE: <span id="current-table">A1</span></b></div>
+            <div class="choose-table-label">
+                <label for="">CHỌN BÀN</label>
+            </div>
+            <div class="pick-area">
+                <div><b>Chọn khu vực</b></div>
+                <select id="area" class="area"></select>
+            </div>
+            <div class="pick-table">
+                <div><b>Chọn bàn</b></div>
+                <select id="table" class="table"></select>
+            </div>
+            <div class="button">
+                <div class="confirm-button">Xác nhận</div>
+                <div class="confirm-button" onclick="window.location.href='/homepage/homepage-user'">Thoát</div>
+            </div>
+        </div>
+        <div class="right-content">
+            <div class="name-of-area"><b>KHU VỰC: <span id="current-area">A</span></b></div>
+            <div class="table-screen"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const areaSelect = document.getElementById('area');
+            const tableSelect = document.getElementById('table');
+            const tableScreen = document.querySelector('.table-screen');
+            const currentTable = document.getElementById('current-table');
+            const currentArea = document.getElementById('current-area');
+
+            // Lấy userId từ localStorage
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                alert('User ID not found. Please log in first.');
+                window.location.href = '/login/signin';  // Chuyển hướng tới trang đăng nhập nếu không có userId
+                return;
+            }
+
+            // Lấy danh sách khu vực từ API
+            fetch('/choose-table')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(area => {
+                        const option = document.createElement('option');
+                        option.value = area.area_id;
+                        option.textContent = area.area_name;
+                        areaSelect.appendChild(option);
+                    });
+
+                    // Đặt mặc định khu vực là A
+                    areaSelect.value = 'A';
+                    currentArea.textContent = 'A'; // Cập nhật khu vực mặc định
+                    loadTablesByArea('A'); // Tải danh sách bàn khu vực A
+                })
+                .catch(error => console.error('Error fetching areas:', error));
+
+            // Khi người dùng chọn khu vực
+            areaSelect.addEventListener('change', function () {
+                const areaId = this.value;
+                currentArea.textContent = areaId; // Cập nhật khu vực hiển thị
+                loadTablesByArea(areaId); // Tải danh sách bàn của khu vực mới
+            });
+
+            // Khi người dùng chọn bàn
+            tableSelect.addEventListener('change', function () {
+                const tableId = this.value;
+                currentTable.textContent = tableId; // Cập nhật mã bàn hiển thị
+            });
+
+            // Hàm tải danh sách bàn theo khu vực
+            function loadTablesByArea(areaId) {
+                fetch(`/choose-table/tables-data/${areaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Cập nhật danh sách bàn trong dropdown
+                        tableSelect.innerHTML = ''; // Xóa các option cũ
+                        data.forEach((table, index) => {
+                            const option = document.createElement('option');
+                            option.value = table.table_id;
+                            option.textContent = table.table_id;
+                            tableSelect.appendChild(option);
+
+                            // Đặt mặc định bàn đầu tiên
+                            if (index === 0) {
+                                tableSelect.value = table.table_id;
+                                currentTable.textContent = table.table_id; // Cập nhật hiển thị bàn mặc định
+                            }
+                        });
+
+                        // Cập nhật danh sách bàn trong table-screen
+                        tableScreen.innerHTML = ''; // Xóa nội dung cũ
+                        data.forEach(table => {
+                            const div = document.createElement('div');
+                            div.innerHTML = ` 
+                                <div>${table.table_id}</div>
+                                <div class="div-bottom">${table.table_status ? 'Đang sử dụng' : 'Bàn trống'}</div>
+                            `;
+                            if (table.table_status) {
+                                div.classList.add('ordered'); // Đánh dấu bàn đang sử dụng
+                            }
+                            tableScreen.appendChild(div);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching tables data:', error));
+            }
+
+            // Xử lý khi người dùng nhấn "Xác nhận"
+            document.querySelector('.confirm-button').addEventListener('click', function () {
+                const selectedTable = tableSelect.value;
+
+                if (selectedTable) {
+                    // Kiểm tra trạng thái của bàn trước khi xác nhận
+                    const selectedOption = tableSelect.options[tableSelect.selectedIndex];
+                    const tableStatus = selectedOption.textContent.includes("Đang sử dụng");
+
+                    if (tableStatus) {
+                        alert("Bàn đã được sử dụng, vui lòng chọn bàn khác.");
+                        return; // Nếu bàn đã sử dụng thì không cho chọn
+                    }
+
+                    // Gửi yêu cầu cập nhật trạng thái bàn thành "đang sử dụng"
+                    fetch('/choose-table/update-table-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            tableId: selectedTable,
+                            userId: userId, // Truyền userId từ localStorage
+                            isAvailable: true, // Cập nhật trạng thái bàn thành "đang sử dụng"
+                        }),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 200) {
+                                alert(data.description);
+                                window.location.href = '/menu'; // Chuyển hướng đến giao diện menu
+                            } else {
+                                alert('Error: ' + data.description);
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                } else {
+                    alert('Please select a table before confirming!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

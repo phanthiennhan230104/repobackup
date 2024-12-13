@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Account</title>
+<link rel="stylesheet" th:href="@{/assets/css/editaccount.css}" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+	<div class="container">
+		<div class="left-panel">
+			<div class="vertical-divider"></div>
+			<h1>ADMIN MODE</h1>
+			<hr class="divider">
+			<button class="exit-btn" onclick="window.location.href='/user'">Exit</button>
+		</div>
+		<div class="right-panel">
+			<h1>EDIT ACCOUNT</h1>
+			<form th:action="@{/saveuser}" th:object="${user}" method="post"
+				class="form-container">
+
+				<div class="form-group">
+					<label for="NewNameAccount">ID</label> <input type="text"
+						th:field="*{id}" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="NewDateOfBirth">Full Name</label> <input type="text"
+						th:field="*{fullname}" />
+				</div>
+				<div class="form-group">
+					<label for="NewPhoneNumber">Phone Number</label> <input type="text"
+						th:field="*{phoneNumber}" />
+				</div>
+				<div class="form-group">
+					<label for="NewPassword">New Password:</label> <input type="text"
+						th:field="*{password}" />
+				</div>
+				<div class="form-group">
+					<label for="NewDateofBirth">New Date Of Birth:</label> <input
+						type="text" th:field="*{dateOfBirth}" />
+				</div>
+				<div class="form-group">
+					<label for="NewRole">New Role:</label> <select
+						th:field="*{roleEntities.role_id}">
+						<option value="0">Role 0</option>
+						<option value="1">Role 1</option>
+						<option value="2">Role 2</option>
+						<option value="3">Role 3</option>
+					</select>
+				</div>
+
+
+				<div class="form-footer">
+					<button type="submit" class="confirm-btn">Confirm</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

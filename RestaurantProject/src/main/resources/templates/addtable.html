@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm bàn</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/addtable.css}"/>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div>
+        <div class="main-screen">
+            <div class="left-bar">
+                <div class="name-of-func"><b>QUẢN LÝ SƠ ĐỒ</b></div>
+                <div class="cashier-infor">Thông tin thu ngân</div>
+                <div class="details-inf">
+                    <div class="cashier-inf">Tên: </div>
+                    <div class="shift-info"></div>
+                </div>
+                <div class="btn-func">
+                    <div class="add-btn">Thêm bàn</div>
+                    <div class="delete-btn" onclick="window.location.href='/homepage-cashier/delete-table'">Xoá bàn</div>
+                    <div>Đặt trạng thái bàn</div>
+                    <div onclick="window.location.href='/homepage/homepage-cashier'">Thoát</div>
+                </div>
+                <div class="choosetable-to-delete">
+                    <div class="pick-area">
+                        <div><b>Chọn khu vực</b></div>
+                        <select id="area" class="area">
+                        </select>
+                    </div>
+                    <div class="create-id">
+                        <div><b>Nhập ID</b></div>
+                        <input type="text" id="table-id">
+                    </div>
+                </div>
+            </div>
+            <div class="right-bar">
+                <div class="delete-table">THÊM BÀN</div>
+                <div class="table-screen">
+                    <div class="tables"></div>
+                    <div class="confirm-add" style="display: none;">
+                        <div class="ask-confirm">
+                            <div>Bạn muốn thêm bàn <span id="confirm-table-id"></span>?</div>
+                            <div class="confirm-btn">Xác nhận thêm</div>
+                        </div>
+                        <div class="table-inf">
+                            <div class="table">
+                                <div id="confirm-table-name"></div>
+                                <div>Bàn trống</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clear-fix"></div>
+        </div>
+    </div>
+
+    <!-- Đoạn script nên được đặt ở cuối body để đảm bảo các phần tử HTML đã được tải hoàn toàn -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const fullname = localStorage.getItem("fullname");
+            if (fullname) {
+                document.querySelector('.cashier-inf').textContent = `Tên: ${fullname}`;
+            }
+
+            const currentTime = new Date();
+            const currentHour = currentTime.getHours();
+            let shift = '';
+            if (currentHour >= 6 && currentHour < 12) {
+                shift = "Sáng";
+            } else if (currentHour >= 12 && currentHour < 18) {
+                shift = "Chiều";
+            } else {
+                shift = "Tối";
+            }
+            document.querySelector('.shift-info').textContent = `Ca làm việc: ${shift}`;
+
+            fetch('/delete-table')
+                .then(response => response.json())
+                .then(data => {
+                    const areaSelect = document.getElementById('area');
+                    data.forEach(area => {
+                        const option = document.createElement('option');
+                        option.value = area.area_id;
+                        option.textContent = area.area_name;
+                        areaSelect.appendChild(option);
+                    });
+
+                    const defaultArea = areaSelect.value;
+                    if (defaultArea) {
+                        loadTablesByArea(defaultArea);
+                    }
+                })
+                .catch(error => console.error('Error fetching areas:', error));
+
+            document.getElementById('area').addEventListener('change', function () {
+                const areaId = this.value;
+                loadTablesByArea(areaId);
+            });
+
+            function loadTablesByArea(areaId) {
+                fetch(`/delete-table/tables-data/${areaId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableScreen = document.querySelector('.tables');
+                        tableScreen.innerHTML = '';
+                        data.forEach(table => {
+                            const tableDiv = document.createElement('div');
+                            tableDiv.classList.add('table');
+                            tableDiv.innerHTML = `  
+                                <div>${table.table_id}</div>
+                                <div>${table.table_status ? 'Đang sử dụng' : 'Bàn trống'}</div>
+                            `;
+                            tableScreen.appendChild(tableDiv);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching tables data:', error));
+            }
+
+         // Khi thay đổi khu vực
+            document.getElementById('area').addEventListener('change', function () {
+                const areaId = this.value;
+                loadTablesByArea(areaId);
+            });
+
+         // Khi nhập ID bàn và xác nhận thêm
+            document.getElementById('table-id').addEventListener('change', function () {
+                const areaId = document.getElementById('area').value;
+                const tableId = this.value.trim();
+
+                if (tableId) {
+                    const newTable = {
+                        table_id: tableId,
+                        areaDto: {
+                            area_id: areaId // Gửi khu vực chọn
+                        },
+                        seats: 6,  // Mặc định số chỗ ngồi là 6
+                        table_status: false // Mặc định trạng thái bàn là trống
+                    };
+
+                    const confirmationScreen = document.querySelector('.confirm-add');
+                    confirmationScreen.style.display = 'block'; // Hiển thị ô xác nhận
+                    document.getElementById('confirm-table-id').textContent = tableId;
+                    document.getElementById('confirm-table-name').textContent = `Bàn ${tableId}`;
+
+                    // Khi nhấn xác nhận thêm
+                    const confirmButton = confirmationScreen.querySelector('.confirm-btn');
+                    confirmButton.onclick = function () {
+                        fetch('/homepage-cashier/add-table', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(newTable),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 200) {
+                                alert('Bàn đã được thêm thành công!');
+                                loadTablesByArea(areaId);  // Load lại danh sách bàn sau khi thêm thành công
+                                confirmationScreen.style.display = 'none';
+                                document.getElementById('table-id').value = '';  // Xóa ID bàn đã nhập
+                            } else {
+                                alert(data.description || 'Có lỗi xảy ra khi thêm bàn.');
+                            }
+                        })
+                        .catch(error => console.error('Error adding table:', error));
+                    };
+                } else {
+                    alert('Vui lòng nhập ID bàn!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

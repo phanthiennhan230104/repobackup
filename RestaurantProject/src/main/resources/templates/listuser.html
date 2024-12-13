@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Account</title>
+<link rel="stylesheet" th:href="@{/assets/css/listuser.css}" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+	integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+	<div class="container">
+		<div class="left-panel">
+			<div class="vertical-divider"></div>
+			<h1>ADMIN MODE</h1>
+			<hr class="divider">
+			<button class="exit-btn"
+				onclick="window.location.href='homepageadmin.html'">Exit</button>
+		</div>
+		<div class="right-panel">
+			<h1>List Account</h1>
+			<form class="form-container">
+				<table border="1" cellpadding="10">
+					<thead>
+						<tr>
+							<th>User ID</th>
+							<th>Full Name</th>
+							<th>Phone</th>
+							<th>Date Of Birth</th>
+							<th>User Name</th>
+							<th>Password</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="user : ${listUsers}">
+							<td th:text="${user.id}">User ID</td>
+							<td th:text="${user.fullname}">Full Name</td>
+							<td th:text="${user.phoneNumber}">Phone</td>
+							<td th:text="${user.dateOfBirth}">Date Of Birth</td>
+							<td th:text="${user.username}">User Name</td>
+							<td th:text="${user.password}">Password</td>
+							<td><a th:href="@{/edituser/{id}(id=${user.id})}">Update</a> 
+							<a th:href="@{/delete/{id}(id=${user.id})}">Delete</a>
+						</tr>
+					</tbody>
+				</table>
+				</form>
+		</div>
+	</div>
+</body>
+</html>

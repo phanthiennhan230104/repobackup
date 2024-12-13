@@ -1,0 +1,92 @@
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+*{
+    box-sizing: border-box;
+}
+.left-content{
+    float: left;
+    width: 48%;
+    height: 600px;
+    border-radius: 15px;
+    align-items: center;
+}
+.logo{
+    background-image: url("/assets/img/homepage.png");
+    width: 300px;
+    height: 250px;
+    border-radius: 15px;
+    left: 45px;
+    margin-left: 45px;
+}
+.title-content{
+    margin: 20px;
+    font-size: 25px;
+}
+.title{
+    color: #1E90FF;
+    font-weight: bold;
+    font-size: 40px;
+    text-align: center;
+}
+.content{
+    color:black;
+}
+.right-content{
+    background-color: rgb(196, 215, 245);
+    float: right;
+    width: 48%;
+    height: 600px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(25px);
+}
+.clear-fix{
+    clear: both;
+}
+.home-page{
+    border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 950px;
+    height: 650px;
+    border-radius: 15px;
+    align-items: center;
+    padding: 25px 40px;
+}
+.top-home-page > *{
+    padding: 10px 20px 10px 20px;
+}
+
+h1{
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    color: #1E90FF;
+}
+
+.bottom-home-page > *{
+    cursor: pointer;
+    padding: 10px 20px 10px 20px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 30px;
+    margin: 15px 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: background 0.4s ease;
+    text-align: center;
+    color:rgb(80, 76, 76);
+}
+.bottom-home-page > *:hover{
+    border: 1px solid rgb(175, 238, 255);
+    background-color: #459def;
+    color: white;
+}
+

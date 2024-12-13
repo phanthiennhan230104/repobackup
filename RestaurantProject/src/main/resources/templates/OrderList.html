@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách đơn hàng</title>
+</head>
+<body>
+    <h1>Danh sách món ăn đã chọn</h1>
+    <div th:if="${orders}">
+        <ul>
+            <li th:each="order : ${orders}">
+                <p th:text="'Món: ' + ${order.dishName} + ', Giá: ' + ${order.price} + ' đ, Số lượng: ' + ${order.quantity}"></p>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${orders.isEmpty()}">
+        <p>Không có món ăn nào trong đơn hàng.</p>
+    </div>
+    <!-- Form xác nhận đơn hàng -->
+    <form action="/confirm-order" method="post">
+        <button type="submit">Xác nhận đơn hàng</button>
+    </form>
+</body>
+</html>

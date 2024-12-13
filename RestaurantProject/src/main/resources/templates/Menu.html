@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/Menu.css}"/>
+</head>
+<body>
+    <!-- Header chứa các tab loại món -->
+    <div class="header">
+    	<div class="logo">
+                <img src="/assets/img/Logo.png">
+            </div>
+       <div class="option-bar">
+		    <button class="tab-btn" onclick="window.location.href='/menu?type=Dish'">Món ăn</button>
+		    <button class="tab-btn" onclick="window.location.href='/menu?type=Drink'">Đồ uống</button>
+		    <button class="tab-btn" onclick="window.location.href='/menu?type=Combo'">Combo</button>
+		    <button class="tab-btn" onclick="window.location.href='/menu'">Menu Tổng</button>
+		</div>
+		
+		 <div class="cart-icon">
+    		<a href="http://localhost:8080/OrderList" class="cart-button">
+      			<button class="cart-btn">
+        			<i class="fa-duotone fa-solid fa-cart-plus"></i>
+      			</button>
+   			 </a>
+  		</div>
+  		<div class="exit-icon">
+  			<a href="http://localhost:8080/homepage/homepage-user" class="exit-button">
+  				<button class="exit-btn">
+  					<i class="fa-solid fa-door-open"></i>
+  				</button>
+  			</a>
+  		</div>
+
+    </div>
+
+    <!-- Thanh tìm kiếm -->
+    <div class="search-bar">
+        <input type="text" placeholder="Nhập Mã/ Tên món ăn cần tìm..." id="search-bar">
+        <button class="search-btn">🔍</button>
+    </div>
+
+    <!-- Danh sách các món ăn -->
+    <div class="menu-items">
+        <div class="menu-item" th:each="item : ${menuItems}">
+            <img th:src="@{${item.imagePath}}" th:alt="${item.dishName}">
+            <div class="item-info">
+                <h3 th:text="${item.dishName}"></h3>
+                <p th:text="${item.price} + ' đ'"></p>
+                   <button class="heart-btn" th:onclick="'addToOrder(' + ${item.dishId} + ')'">
+    					<i class="fa-solid fa-heart"></i>
+					</button>
+            </div>
+        </div>
+        <p th:if="${menuItems == null || menuItems.isEmpty()}" style="text-align: center; color: red;">
+            Không có món ăn nào để hiển thị.
+        </p>
+    </div>
+
+    <!-- Script xử lý tìm kiếm -->
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        searchBar.addEventListener('input', () => {
+            const query = searchBar.value.toLowerCase();
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                const name = item.querySelector('h3').textContent.toLowerCase();
+                item.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        });
+    </script>
+    
+    <script>
+    function addToOrder(dishId) {
+        fetch('/api/invoice-menu/add-to-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ dishId: dishId }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Món ăn đã được thêm vào đơn hàng!');
+                } else {
+                    alert('Có lỗi xảy ra: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra. Vui lòng thử lại!');
+            });
+    }
+	
+</script>
+</body>
+</html>

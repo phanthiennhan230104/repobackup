@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/seeinvoice.css}"/>
+    <link rel="icon" href="data:,">
+    <title>Show Invoice</title>
+</head>
+<body>
+    <div class="show-invoice">
+        <div class = "left-content">
+            <div class = "table-code"><b>TABLE CODE: B2</b></div>
+            <div class = "show-invoice-label">
+                <label for="">XEM HOÁ ĐƠN</label>
+            </div>
+            <div><b>CHI TIẾT</b></div>
+            <div class = "status-button">
+                <button class = "details-button" type="button">Trạng thái món</button>
+            </div>
+            <div class = "confirm-button">
+                <button class = "details-button" type="button"  onclick="window.location.href='/homepage/homepage-user'">Xác nhận</button>
+            </div>
+            <p>Có thể thanh toán ngay bằng cách quét mã QR ở góc dưới bên phải!</p>
+        </div>
+        <div class="right-content">
+            <div class = "name-of-func">
+                <div><b>XEM TRẠNG THÁI MÓN</b></div>
+                <div><b>Mã hoá đơn: 123214</b></div>
+            </div>
+            <div class = "table-screen">
+                <div class = "foot-form" style="background-image: url('/assets/img/foodimg.png');">
+                    <div>
+                        <div>MÓN A</div>
+                        <div class = "div-bottom">Số lượng: 2</div>
+                    </div>
+                    <div class = "price">140.000đ</div>
+                </div>
+                <div class = "foot-form foot-form-colorA" style="background-image: url('/assets/img/foodimg.png');">
+                    <div class = "orderedA">
+                        <div>MÓN B</div>
+                        <div class = "div-bottom">Số lượng: 1</div>
+                    </div>
+                    <div class = "price">65.000đ</div>
+                </div>
+                <div class = "foot-form foot-form-colorB" style="background-image: url('/assets/img/foodimg.png');">
+                    <div class = "orderedB">
+                        <div>MÓN C</div>
+                        <div class = "div-bottom">Số lượng: 2</div>
+                    </div>
+                    <div class = "price">180.000đ</div>
+                </div>
+                <div class = "foot-form" style="background-image: url('/assets/img/foodimg.png');">
+                    <div>
+                        <div>MÓN D</div>
+                        <div class = "div-bottom">Số lượng: 3</div>
+                    </div> 
+                    <div class = "price">240.000đ</div>
+                </div>
+                <div class = "sum">
+                    <div><b style="font-size: 20px;">TỔNG TIỀN: 625.000đ</b></div>
+                    <div><b>Điểm tích luỹ cộng thêm</b></div>
+                    <div>
+                        <b>Sử dụng điểm tích luỹ</b>
+                        <input type="checkbox">
+                    </div>
+                    <div style="color: red;"><b>*Quẹt thẻ để sử dụng</b></div>
+                </div>
+                <div class = "pay">
+                    <!-- <div>QR Thanh toán</div> -->
+                    <div class = "QR"  style="background-image: url('/assets/img/qrtest.png');"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

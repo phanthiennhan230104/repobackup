@@ -1,0 +1,93 @@
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+h2{
+    color: rgb(27, 91, 174);
+    font-size: 45px;
+}
+h3{
+    color: #7DC0FF;
+    font-size: 35.1px;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 950px;
+    height: 650px;
+    border-radius: 15px;
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
+}
+.main-form{
+    padding: 10px 20px;
+    width: max-content;
+    height: max-content;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.title{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.information input:not([type = "radio"]){
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px 10px;
+    width: 100%;
+    border: 1px solid #427aae;
+}
+.information > *, .account > *{
+    margin: 5px 0px;
+}
+input:focus{
+    outline: none;
+    border-color: #132382;
+}
+.details-gender{
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: flex;
+    border: 1px solid black;
+    justify-content: space-between;
+    background-color: white;
+    border: 1px solid #427aae;
+}
+.details-gender div > *{
+    margin: 0px 5px;
+}
+.button button{
+    padding: 10px 30px;
+    border-radius: 10px;
+    background-color: rgb(27, 91, 174);
+    color: white;
+    font-weight: 500;
+    transition: 0.2s all ease-in;
+}
+.button button:hover{
+    background-color: #4d8cc7;
+}
+
+.button{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+label{
+    color: #427aae;
+}
+.dateofbirth input{
+    color: #427aae;
+}
