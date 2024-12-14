@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Mode - Danh Sách Gọi Món</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/DishOrder.css}"/>
+</head>
+<body>
+    <div class="main-screen">
+        <!-- Left bar -->
+        <div class="left-bar">
+            <div class="name-of-func"><b>XEM DANH SÁCH GỌI MÓN</b></div>
+            <div class="chef-infor">Thông tin CHEF</div>
+            <div class="details-inf">
+                <div class="chef-inf">Tên: </div>
+                <div class="shift-info"></div>
+            </div>
+            <div class="btn-func">
+                <div class="waiting" onclick="window.location.href='/chef/tables'">Danh sách bàn</div>
+                <div class="exit" onclick="window.location.href='/homepage/homepage-chef'">Thoát</div>
+            </div>
+        </div>
+        
+        <!-- Right bar -->
+        <div class="right-bar">
+            <div class="dish-table">DANH SÁCH MÓN GỌI MÓN</div>
+            <div class="table-screen">
+                <table>
+				    <thead>
+				        <tr>
+				            <th>Số thứ tự</th>
+				            <th>Tên món ăn</th>
+				            <th>Số lượng</th>
+				            <th>Đơn giá</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+				        <tr th:each="dish, iterStat : ${dishes}">
+				            <td th:text="${iterStat.index + 1}">1</td> <!-- Tự động tăng từ 1 -->
+				            <td th:text="${dish.dishName}">Tên món ăn</td>
+				            <td th:text="${dish.quantity}">Số lượng</td>
+				            <td th:text="${dish.price}">Đơn giá</td>
+				        </tr>
+				    </tbody>
+				</table>
+                <div th:if="${updateMessage}" class="alert-success" th:text="${updateMessage}"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+	    document.addEventListener('DOMContentLoaded', function () {
+	            const fullname = localStorage.getItem("fullname");
+	            if (fullname) {
+	                document.querySelector('.chef-inf').textContent = "Tên: " + fullname;
+	            }
+	
+	            const currentTime = new Date();
+	            const currentHour = currentTime.getHours();
+	            let shift = '';
+	            if (currentHour >= 6 && currentHour < 12) {
+	                shift = "Sáng";
+	            } else if (currentHour >= 12 && currentHour < 18) {
+	                shift = "Chiều";
+	            } else {
+	                shift = "Tối";
+	            }
+	            document.querySelector('.shift-info').textContent = "Ca: " + shift;
+	        });
+	    
+	    function openTableDetails(element) {
+	        const tableId = element.getAttribute("data-table-id");
+	        console.log("Table ID: ", tableId); // Hiển thị tableId trong console, hoặc bạn có thể thực hiện các hành động khác với tableId
+	        window.location.href = '/dishes/' + tableId; // Điều hướng đến trang chi tiết của bàn
+	    }
+    </script>
+</body>
+</html>
