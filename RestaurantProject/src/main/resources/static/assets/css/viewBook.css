@@ -1,0 +1,84 @@
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Chiều cao toàn bộ màn hình */
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+*{
+    box-sizing: border-box;
+}
+
+.container {
+    flex-direction: column;
+    width: 950px;
+    height: 650px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(196, 215, 245);
+    background: linear-gradient(to bottom, rgb(196, 215, 245), rgb(116, 160, 232));
+    padding: 20px; /* Thêm một chút padding để không quá sát viền */
+}
+
+.main-form {
+    padding: 10px 20px;
+    width: 80%; /* Chiều rộng form chiếm 80% container */
+    max-width: 900px; /* Giới hạn chiều rộng tối đa */
+    height: max-content;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 500px;
+    overflow-y: auto;
+
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(196,215,245);
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+table th{
+    background-color: #f0f0f0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black;
+}
+table thead{
+    top: 0px;
+    position: sticky;
+}
+
+button{
+    padding:5px 10px;
+    height: 40px;
+    width: 120px;
+    margin-top: 20px;
+    border: 1px solid white;
+    border-radius: 7px;
+    background-color: (196, 215, 245);
+    transition: all 0.3s ease-in;
+}
+button:hover{
+    background-color: #e55d51;
+}
